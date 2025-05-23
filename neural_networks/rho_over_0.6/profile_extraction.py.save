@@ -1,0 +1,25 @@
+import numpy as np
+def load_profile(file, initial_offset=3, chunk_size=20,):
+    index = 0
+    result = {}
+    while True:
+        try:
+            info = np.loadtxt(
+                file,
+                skiprows=initial_offset + chunk_size * index+(index),
+                max_rows=1,
+            )
+            data = np.loadtxt(
+                file,
+                skiprows=initial_offset + chunk_size * index+(index +1),
+                max_rows=chunk_size,
+            )
+            result[int(info[0])] = data
+            index +=1
+        except Exception as e:
+            # print(e)
+            break
+    return result
+
+profile = load_profile("profile.mp")
+print(profile)
